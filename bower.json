@@ -1,0 +1,11 @@
+{
+  "name": "eb-member-summary",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Damon.Liu <damon.liu@everbridge.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/pairwinter/eb-member-summary",
+  "private": true
+}

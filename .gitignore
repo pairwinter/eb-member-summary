@@ -39,4 +39,5 @@ jspm_packages
 # added by damon
 .idea
 members.json
+fetchMembers.js
 
