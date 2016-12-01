@@ -47,5 +47,6 @@ upload_dest
 *.sass.css.map
 
 dist/
+.DS_Store
 
 
