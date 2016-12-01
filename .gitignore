@@ -40,4 +40,12 @@ jspm_packages
 .idea
 members.json
 fetchMembers.js
+upload_dest
+
+*.pug.html
+*.sass.css
+*.sass.css.map
+
+dist/
+
 

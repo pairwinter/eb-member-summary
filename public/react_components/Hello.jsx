@@ -1,6 +1,9 @@
-import React from 'react'
+import {Component} from 'react';
+import {render} from 'react-dom';
 
-ReactDOM.render(
-    <h1>Hello, word!</h1>,
-    document.getElementById('body')
-);
+export default class Hello extends Component{
+    render() {
+        return <h1>Hello, word! <span>Damon</span> <span>Liu</span></h1>;
+    };
+}
+
