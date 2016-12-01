@@ -46,6 +46,7 @@ upload_dest
 *.sass.css
 *.sass.css.map
 
+bower_components/
 dist/
 .DS_Store
 
