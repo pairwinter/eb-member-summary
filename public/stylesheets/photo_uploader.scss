@@ -8,8 +8,20 @@ $uploader-container-size:500px;
   border-radius: $radius;
 }
 
+@mixin shadow($border){
+  -webkit-box-shadow:  $border $border 10px #666;
+  -moz-box-shadow: $border $border 10px #666;
+  box-shadow: $border $border 10px #666;
+}
+
+@mixin no-shadow(){
+  -webkit-box-shadow:  0 0 0px #666;
+  -moz-box-shadow: 0 0 0px #666;
+  box-shadow: 0 0 0px #666;
+}
+
 .drag-over{
-  border: 3px $uploader-border-hover-color dotted
+  border: 3px $uploader-border-hover-color dashed
 }
 
 .uploader-container{
@@ -22,43 +34,68 @@ $uploader-container-size:500px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
+.uploader-container * {pointer-events: none;}
+
+.uploader-tip{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 100px;
+  margin-left: -250px;
+  margin-top: -50px;
+  text-align: center;
+  vertical-align: middle;
+}
 
 .uploader-container.has-child{
   //height: auto;
 }
-
-
-.drag-over{
-  border: 3px $uploader-border-hover-color dashed
+.has-child .uploader-tip{
+  display: none;
 }
-
 
 .photo-preview-container-style{
   //width: $uploader-container-size;
-  //height: $uploader-container-size;
   margin: auto;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .photo-preview-img-style{
-  width: 500px;
+  //width: 100%;
   display: block;
-  border: 2px $uploader-border-color double;
-  @include border-radius(10px)
+  position: fixed;
+  margin: auto;
+  @include shadow(15px);
+  @include border-radius(25px)
 }
 
-.uploader-container * {pointer-events: none;}
+@-webkit-keyframes moveIntoPhotoWall {
+  from {
+    width: 500px;
+    transform:rotate(0deg);
+  }
+  to {
+    width: 80px;
+    transform:rotate(360deg);
+  }
+}
 
-.beforeInsertToList{
-  transition:width 2s, height 2s, left 2s, top 2s;
-  -moz-transition:width 2s, height 2s, left 2s, top 2s, -moz-transform 2s; /* Firefox 4 */
-  -webkit-transition:width 2s, height 2s, left 2s, top 2s, -webkit-transform 2s; /* Safari and Chrome */
+.move-into-photo-wall{
+  animation: moveIntoPhotoWall 2s;
+  -webkit-animation: moveIntoPhotoWall 2s;
+  animation-direction:alternate;
+  -webkit-animation-direction:alternate;
 }
-.insertToList{
-  width: 100px;
-  left: 0;
-  top: 0;
+
+.move-into-photo-wall-transition{
+  transition: width 2s, height 2s, top 2s, left 2s, transform 2s;
+  -moz-transition: width 2s, height 2s, top 2s, left 2s, -moz-transform 2s;
+  -webkit-transition: width 2s, height 2s, top 2s, left 2s, -webkit-transform 2s;
+  transform:rotate(0deg);
+  @include no-shadow();
+  @include border-radius(5px)
 }
+

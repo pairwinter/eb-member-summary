@@ -25,7 +25,7 @@ var upload = multer(uploadOptions);
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    res.send('respond with a resource, here is the hode of photos manager');
+    res.render('photo.uploader.pug', { title: 'Photo Uploader' });
 });
 
 router.post('/upload', upload.single('photo'), function (req, res, next) {
@@ -35,6 +35,10 @@ router.post('/upload', upload.single('photo'), function (req, res, next) {
     } else {
         res.end('Upload Error!');
     }
+});
+
+router.post('/wall',function (req, res, next) {
+    res.render('photo.wall.pug', { title: 'Photo Wall' });
 });
 
 module.exports = router;

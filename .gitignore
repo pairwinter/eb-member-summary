@@ -51,5 +51,6 @@ upload_dest
 bower_components/
 dist/
 .DS_Store
+images
 
 
