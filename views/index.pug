@@ -1,10 +1,8 @@
 extends layout
 
 block content
-    link(rel='stylesheet', href='/stylesheets/photo_uploader_style.css')
-    h1= title
-    p Welcome to #{title}, who are you?
     #reactComponent
-    form#uploadPhoto(method='post' action='/photos/upload' enctype='multipart/form-data')
-        input(type='file' name='photo')
-        input(type='submit' value='Upload')
+    #photoUploader
+    //form#uploadPhoto(method='post' action='/photos/upload' enctype='multipart/form-data')
+    //    input(type='file' name='photo')
+    //    input(type='submit' value='Upload')

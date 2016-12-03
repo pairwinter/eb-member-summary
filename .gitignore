@@ -45,6 +45,8 @@ upload_dest
 *.pug.html
 *.sass.css
 *.sass.css.map
+*_scss.css
+*_scss.css.map
 
 bower_components/
 dist/

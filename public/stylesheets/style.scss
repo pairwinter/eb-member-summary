@@ -1,0 +1,16 @@
+@import "reset";
+
+html, body{
+  //height: 100%;
+  //width: 100%;
+}
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF
+}
+
+@import "photo_uploader";

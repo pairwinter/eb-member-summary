@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 
 export default class Hello extends Component{
     render() {
-        return <h1>Hello, word! <span>Damon</span> <span>Liu</span></h1>;
+        return <h1 className="animated bounceInDown">Upload Your Photo!</h1>;
     };
 }
 
