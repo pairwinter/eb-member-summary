@@ -6,7 +6,8 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     imagemin = require('gulp-imagemin'),
     sourcemaps = require('gulp-sourcemaps'),
-    del = require('del');
+    del = require('del'),
+    livereload = require('gulp-livereload');
 
 var paths = {
     scripts: [''],
@@ -21,4 +22,17 @@ gulp.task('default', function() {
 
 gulp.task('clean', function(){
   return del(['build']);
+});
+
+gulp.task('ems', function () {
+    livereload.listen({
+        port: 35729
+    });
+    gulp.watch([
+        'views/lab/canvas.pug',
+        'public/javascripts/lab/canvas.js',
+        'public/stylesheets/canvas.css'
+    ], function (event) {
+        gulp.src(event.path).pipe(livereload());
+    })
 });

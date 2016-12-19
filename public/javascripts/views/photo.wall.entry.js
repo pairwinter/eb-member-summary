@@ -1,5 +1,5 @@
 import React from 'react';
 import {render} from 'react-dom';
-import PhotoUploader from 'comps/PhotoUploader.jsx';
+import PhotoWall from 'comps/PhotoWall.jsx';
 
-render(<PhotoUploader/>, document.getElementById('photoUploader'));
+render(<PhotoWall/>, document.getElementById('photoWall'));

@@ -1,0 +1,69 @@
+.canvas-container {
+    width: 1080px;
+    height: 540px;
+    position: relative;
+    overflow: hidden;
+}
+
+.canvas-container > img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: move;
+}
+
+.canvas-container .control,
+.canvas-container .top,
+.canvas-container .bottom,
+.canvas-container .left,
+.canvas-container .right{
+    position: absolute;
+    background-color: #fff;
+    opacity: 0.8;
+    /*pointer-events: none;*/
+}
+
+.control{
+    width: 300px;
+    height: 50px;
+    left: 390px;
+    top: 420px;
+    background-color: #4C6C8F;
+    text-align: center;
+}
+
+.control a{
+    font-size: 30px;
+    margin: 10px;
+    text-decoration: none;
+}
+
+
+
+.canvas-container .top {
+    width: 1080px;
+    height: 120px;
+    left: 0;
+    top: 0;
+}
+
+.canvas-container .bottom {
+    width: 1080px;
+    height: 120px;
+    left: 0;
+    bottom: 0;
+}
+
+.canvas-container .left {
+    width: 390px;
+    height: 300px;
+    left: 0;
+    top: 120px;
+}
+
+.canvas-container .right {
+    width: 390px;
+    height: 300px;
+    right: 0;
+    top: 120px;
+}

@@ -6,4 +6,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+/* GET home page. */
+router.get('/lab/canvas', function(req, res, next) {
+    res.render('lab/canvas.pug', { title: 'Canvas' });
+});
+
 module.exports = router;
