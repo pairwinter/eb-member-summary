@@ -6,26 +6,132 @@
   height: 540px;
   transform: translate(-50%, -50%);
 }
+.photo-wall-container{
+  background-color: #d20000;
+  border-radius: 5px;
+}
 .photo-wall-container, .photo-show-container{
   position: relative;
   width: 1080px;
   height: 540px;
   //text-align: center;
 }
-.photo-wall-container img{
-  width: 50px;
-  height: 50px;
+.photo-wall-container .preview{
+  width: 102px;
+  height: 60px;
   padding: 0;
   border-radius: 5px;
+  border: 1px solid #d18282;
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+  outline: 10px;
+}
+
+.preview.selected{
+  -webkit-filter: blur(0px);
 }
 
 .photo-container{
-  padding: 3px;
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 106px;
+  height: 64px;
+}
+
+.photo-info{
+  position: absolute;
+  width: 480px;
+  height: 340px;
+  left: 300px;
+  top: 100px;
+  background-color: coral;
+  border-radius: 5px;
+  padding:10px;
+}
+.photo-info h3{
+  padding: 0;
+  margin:0;
+}
+.photo-info-img{
+  width: 480px;
+  height: 280px;
+  border-radius: 5px;
+ }
+
+.photo-info-left{
+  left: 3px;
 }
 
 .photo-show-container{
+  position: absolute;
+  width: 800px;
+  height: 300px;
+  left: 140px;
+  top: 120px;
+  background-color: #d20000;
+  border-radius: 5px;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 130%;
+}
+
+.saying {
+  background-image: url("/stylesheets/saying.jpeg");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 100px;
+}
+
+.put-down{
+  width: 500px;
+  height: 100px;
+  left: 290px;
+  top: 420px;
+  background-color: coral;
+  border-radius: 5px;
+}
+
+.photo-hiding{
   display: none;
 }
+.photo-showing{
+  display: block;
+}
+.photo-show-container .view{
+  width: 300px;
+  height: 300px;
+  border-radius: 5px;
+}
+.put-down .view{
+  width: 80px;
+  height: 80px;
+}
+
+
+
+.view.say-to{
+  float: right;
+}
+
+.photo-show-container .comments {
+  display: inline-block;
+  vertical-align: top;
+  padding: 50px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.info{
+  display: inline-block;
+  vertical-align: top;
+  padding: 10px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.info p{
+  width: 300px;
+}
+
+.put-down .info{
+
+}
+

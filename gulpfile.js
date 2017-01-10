@@ -7,12 +7,15 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     sourcemaps = require('gulp-sourcemaps'),
     del = require('del'),
+    webpack = require('webpack'),
     livereload = require('gulp-livereload');
 
 var paths = {
     scripts: [''],
     images: 'k'
 };
+
+var webpackConfig = require('./webpack.config.js');
 
 
 
@@ -34,5 +37,13 @@ gulp.task('ems', function () {
         'public/stylesheets/canvas.css'
     ], function (event) {
         gulp.src(event.path).pipe(livereload());
-    })
+    });
+    gulp.watch([
+        'public/react_components/*.jsx',
+        'public/stylesheets/*.scss'
+    ], function (event) {
+        webpack(webpackConfig).run(function (done) {
+            gulp.src(event.path).pipe(livereload());
+        });
+    });
 });

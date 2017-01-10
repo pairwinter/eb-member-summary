@@ -30,9 +30,15 @@ $uploader-container-size:500px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  display: none;
 }
+.uploader-container.id-valid{
+  display: block;
+}
+
 .uploader-container * {pointer-events: none;}
-.uploader-container button {pointer-events: auto;}
+.uploader-container button,
+.uploader-container input{pointer-events: auto;}
 .uploader-tip{
   position: fixed;
   top: 50%;
@@ -49,6 +55,32 @@ $uploader-container-size:500px;
   //height: auto;
 }
 .has-child .uploader-tip{
+  display: none;
+}
+
+.valid-id-container{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  height: 100px;
+  width: 700px;
+  margin-left: -350px;
+  margin-top: -50px;
+  text-align: center;
+}
+.id-input{
+  font-size: 20px;
+  padding: 5px;
+  height: 27px;
+  width: 300px;
+  vertical-align: top;
+}
+.id-ok{
+  font-size: 30px;
+  margin-left: 15px ;
+}
+
+.has-child .valid-id-container{
   display: none;
 }
 

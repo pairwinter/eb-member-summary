@@ -26,6 +26,8 @@ export default class PhotoUploader extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user:{},
+            idValid: false,
             activeDrag: false,
             imageList: [],
             imageCounter: 0,
@@ -46,6 +48,10 @@ export default class PhotoUploader extends Component {
                 }
             }
         };
+    }
+
+    componentDidMount(){
+        this.domMemberId.focus();
     }
 
     openFullScreen(e){
@@ -385,11 +391,13 @@ export default class PhotoUploader extends Component {
             jPictureThankYouContainer = $(this.pictureThankYouContainer);
         jPictureContainer.find('img').removeClass('zoomIn').addClass('fadeOutRight');
         jPictureContainer.find('div.picture-bottom').addClass('animated').addClass('fadeOutDown');
+
+        var member = this.state.user;
         $.ajax ({
             url: 'photos/savePicture',
             type: "POST",
             data: JSON.stringify({
-                id: 0,
+                member: member,
                 picture: picture
             }),
             contentType: "application/json; charset=utf-8"
@@ -399,11 +407,37 @@ export default class PhotoUploader extends Component {
         });
 
     }
+
+    idOKClick(e){
+        if(!this.domMemberId.value){
+
+            return;
+        }
+        var _this = this;
+        $.ajax ({
+            url: 'photos/validUser',
+            type: "POST",
+            data: JSON.stringify({
+                id: this.domMemberId.value
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType:'json'
+        }).done(function(data){
+            if(data.status === 'success'){
+                _this.setState({idValid: true, user: data.user});
+            }
+        });
+    }
     render() {
         return <div ref={(container) => {this.container = container}}>
+            <div className={`animated valid-id-container bounceInDown ${this.state.idValid ? 'fadeOutDown' : ''}`}>
+                <h1>Please input your China National ID Number</h1>
+                <input className="id-input" ref={(input) => {this.domMemberId = input}}/>
+                <button className="id-ok" type="button" onClick={this.idOKClick.bind(this)} value="OK">OK</button>
+            </div>
             <div ref={(div) => { this.dragArea = div; }}
                  draggable="draggable"
-                 className={`uploader-container ${this.state.imageList.length > 0 ? 'has-child' : ''} ${this.state.activeDrag ? 'drag-over' : ''}`}
+                 className={`uploader-container ${this.state.idValid ? 'id-valid' : ''} ${this.state.imageList.length > 0 ? 'has-child' : ''} ${this.state.activeDrag ? 'drag-over' : ''}`}
                  onClick={this.handleOnClick.bind(this)}
                  onDragOver={this.handleOnDragOver.bind(this)}
                  onDragEnd={this.handleOnDragEnd.bind(this)}
@@ -416,7 +450,9 @@ export default class PhotoUploader extends Component {
                  onDoubleClick={this.openFullScreen.bind(this)}
             >
                 <div className="border"></div>
-                <h1 className={`uploader-tip animated bounceInDown`}>Drag you picture here to upload!</h1>
+                <h1 className={`uploader-tip animated bounceInDown`}>
+                    Welcome {this.state.user.fullName}, please drag your picture here to upload!
+                </h1>
                 {this.state.imageList.map((image, index) =>
                     <img ref={(img) => this.imgDom = img} key={index} src={image.src} className={`${image.insertIntoWall ? '' : `animated ${image.animationType}`}  photo-preview-img-style ${image.insertIntoWall ? 'move-into-photo-wall-transition' : ''}`} style={image.style}/>
                 )}
@@ -435,7 +471,7 @@ export default class PhotoUploader extends Component {
                     <button ref={(button) => {this.pictureButton = button;}} type="button" onClick={this.reselectPicture.bind(this)}>Re-Select</button>
                 </div>
                 <div ref={(div) => {this.pictureThankYouContainer = div}} className="animated picture-thank-you">
-                    Thank You!
+                    Thank You, {this.state.user.fullName}!
                 </div>
             </div>
         </div>
