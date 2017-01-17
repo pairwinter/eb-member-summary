@@ -125,7 +125,6 @@ export default class PhotoWall extends Component {
     }
 
     updateMessageDisplayTime(messageId) {
-        delete this.cachedMessageIDs[messageId];
         console.log('Go to remove message: ', messageId);
         console.log('Cached MessageIDs: ', this.cachedMessageIDs);
         $.ajax({
@@ -135,10 +134,8 @@ export default class PhotoWall extends Component {
                 ID: messageId
             }
         }).done(function (data) {
+            this.cachedMessageIDs[messageId] = 'down';
             console.log('Remove message successfully: ', messageId);
-            if (this.playMessages.length === 0) {
-                this.getHiList();
-            }
         }.bind(this));
     }
 
@@ -146,6 +143,14 @@ export default class PhotoWall extends Component {
         var _this = this,
             imageListCache = this.imageListCache;
         var cachedMessageIDs = this.cachedMessageIDs;
+
+        var keys = _.keys(cachedMessageIDs);
+        _.each(keys, function (key, index) {
+            if(cachedMessageIDs[key] === 'done'){
+                delete cachedMessageIDs[key];
+            }
+        });
+
         $.ajax({
             url: host + '/EB/getHiList',
             type: "GET",
@@ -163,7 +168,7 @@ export default class PhotoWall extends Component {
             if (response && response.data && response.data.length) {
                 let messages = [];
                 _.each(response.data, function (message) {
-                    if (cachedMessageIDs[message.ID]) {
+                    if (cachedMessageIDs[message.ID] !== undefined) {
                         return;
                     }
                     cachedMessageIDs[message.ID] = true;
@@ -171,11 +176,6 @@ export default class PhotoWall extends Component {
                     if (image) {
                         image = _.clone(image);
                     }
-                    // else{
-                    //
-                    //     _this.updateMessageDisplayTime(message.ID);
-                    //     return;
-                    // }
                     image.isSayTo = message.IsSayTo === 1;
                     image.isSaying = true;
                     image.title = image.isSayTo ? `Someone says to <b>${image.Name}</b>:` : `<b>${image.Name}</b> says:`;
@@ -192,15 +192,19 @@ export default class PhotoWall extends Component {
             } else {
                 console.log('There is no new messages!');
             }
+
+            // setTimeout(function () {
+            //     _this.getHiList();
+            // },1500);
         });
     }
 
     playPhotoWall() {
+        var _this = this;
         if (this.playMessages.length) {
             this.playMessagesPhoto();
             return;
         }
-        this.getHiList();
         this.playIndex = this.playIndex || 0;
         var imageList = this.state.imageList || [];
         if (!imageList.length) {
@@ -254,20 +258,19 @@ export default class PhotoWall extends Component {
     }
 
     showPhoto(selectedPhoto, callback) {
+        var _this = this;
         console.log('Play Photo ==> ', selectedPhoto);
 
         selectedPhoto.status = PHOTO_STATUS_SELECTED;
         this.setState({
             selectedPhoto: selectedPhoto
         });
+        _this.getHiList();
         setTimeout(function () {
             selectedPhoto.status = PHOTO_STATUS_SHOW;
             this.setState({
                 selectedPhoto: selectedPhoto
             });
-            if(!selectedPhoto.isSaying){
-                this.getHiList();
-            }
             setTimeout(function () {
                 this.state.selectedPhoto.status = PHOTO_STATUS_HIDDEN;
                 this.setState({
