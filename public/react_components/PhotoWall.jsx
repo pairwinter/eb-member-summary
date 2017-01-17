@@ -94,7 +94,7 @@ export default class PhotoWall extends Component {
                     ID: member.ID,
                     Name: member.Name,
                     JoinDate: member.JoinDate,
-                    src: 'http://www.ihzone.com/everbridge/photowall/public/images/' + member.Name + '.jpg'
+                    src: 'http://www.ihzone.com/everbridge/photowall/public/images/' + (member.Avatar || ("1" + member.Name)) + '.jpg'
                 }
             });
             console.log(response);
@@ -163,14 +163,19 @@ export default class PhotoWall extends Component {
                     if (cachedMessageIDs[message.ID]) {
                         return;
                     }
-                    cachedMessageIDs[message.MID] = true;
+                    cachedMessageIDs[message.ID] = true;
                     var image = imageListCache[message.MID];
                     if (image) {
                         image = _.clone(image);
                     }
+                    // else{
+                    //
+                    //     _this.updateMessageDisplayTime(message.ID);
+                    //     return;
+                    // }
                     image.isSayTo = message.IsSayTo === 1;
                     image.isSaying = true;
-                    image.title = image.isSayTo ? `Someone says to ${image.Name}:` : `${image.Name} says:`;
+                    image.title = image.isSayTo ? `Someone says to <b>${image.Name}</b>:` : `<b>${image.Name}</b> says:`;
                     image.comments = message.Message;
                     image.messageID = message.ID;
                     messages.push(image);
@@ -236,15 +241,16 @@ export default class PhotoWall extends Component {
         if (!selectedPhoto) {
             return;
         }
+        if (this.playMessages.length === 0) {
+            this.getHiList();
+        }
         this.updateMessageDisplayTime(selectedPhoto.messageID);
         selectedPhoto.isSaying = true;
         // selectedPhoto.isSayTo = Math.random() > 0.5;
         this.showPhoto(selectedPhoto, function () {
             this.playMessagesPhoto();
         }.bind(this));
-        if (this.playMessages.length === 0) {
-            this.getHiList();
-        }
+
     }
 
     showPhoto(selectedPhoto, callback) {
@@ -259,6 +265,7 @@ export default class PhotoWall extends Component {
             this.setState({
                 selectedPhoto: selectedPhoto
             });
+            this.getHiList();
             setTimeout(function () {
                 this.state.selectedPhoto.status = PHOTO_STATUS_HIDDEN;
                 this.setState({
@@ -266,9 +273,9 @@ export default class PhotoWall extends Component {
                 });
                 setTimeout(function () {
                     callback();
-                }.bind(this), 1000);
+                }.bind(this), 500);
             }.bind(this), 4000);
-        }.bind(this), 1000);
+        }.bind(this), 500);
     }
 
     renderSelectedPhoto(selectedPhoto) {
@@ -287,10 +294,16 @@ export default class PhotoWall extends Component {
             if (selectedPhoto.isSayTo) {
                 className = className + ' saying';
             }
+            var say = '';
+            if(selectedPhoto.isSayTo){
+                say = <span className="say-span">Someone says to <span className="say-name">{selectedPhoto.Name}</span>:</span>
+            }else{
+                say = <span className="say-span"><span className="say-name">{selectedPhoto.Name}</span> says:</span>
+            }
             render = <div className={className}>
                 <img src={selectedPhoto.src} className={`view ${(selectedPhoto.isSayTo) ? 'say-to' : ''}`}/>
-                <div className="info">
-                    <h3>{selectedPhoto.isSaying ? selectedPhoto.title : selectedPhoto.Name}</h3>
+                <div className={`info ${selectedPhoto.isSaying?'saying-info':''}`}>
+                    {selectedPhoto.isSaying ? say : <h3>{selectedPhoto.Name}</h3>}
                     <p>{selectedPhoto.isSaying ? selectedPhoto.comments : selectedPhoto.intro}</p>
                 </div>
             </div>;
