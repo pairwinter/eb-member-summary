@@ -7,8 +7,8 @@
   transform: translate(-50%, -50%);
 }
 .photo-wall-container{
-  background-color: #d20000;
-  border-radius: 5px;
+  //background-color: #d20000;
+  //border-radius: 5px;
 }
 .photo-wall-container, .photo-show-container{
   position: relative;
@@ -17,14 +17,11 @@
   //text-align: center;
 }
 .photo-wall-container .preview{
-  width: 102px;
-  height: 60px;
+  width: 108px;
+  height: 77px;
   padding: 0;
-  border-radius: 5px;
-  border: 1px solid #d18282;
-  filter: blur(1px);
-  -webkit-filter: blur(1px);
-  outline: 10px;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
 }
 
 .preview.selected{
@@ -64,15 +61,15 @@
 .photo-show-container{
   position: absolute;
   width: 800px;
-  height: 280px;
-  left: 140px;
-  top: 130px;
-  //background-color: #d20000;
+  height: 440px;
+  left: 90px;
+  top: 50px;
   border-radius: 5px;
-  padding: 10px;
+  padding: 50px;
   color: #ffffff;
   font-size: 130%;
-  background: url("/stylesheets/DialogBox.png");
+  background: url("/stylesheets/DialogBox.png") no-repeat;
+  background-position-y: 0px;
 }
 
 .put-down{

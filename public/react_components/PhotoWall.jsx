@@ -98,11 +98,11 @@ export default class PhotoWall extends Component {
                 }
             });
             console.log(response);
-
+            imageList.push(JSON.parse(JSON.stringify(imageList[18])));
             _.each(imageList, function (photo, index) {
                 photo.style = Object.assign({}, {
-                    top: Math.floor((index) / 10) * 65 + ((540 - 65 * 8) / 2),
-                    left: (index % 10) * 107 + (1080 - 107 * 10) / 2
+                    top: Math.floor((index) / 10) * (540/7),
+                    left: (index % 10) * 108
                 });
                 console.log(JSON.stringify(photo.style));
             });
@@ -119,7 +119,7 @@ export default class PhotoWall extends Component {
                 imageList: imageList
             });
 
-            // this.getHiList();
+            this.getHiList();
 
         }.bind(this));
     }
@@ -136,7 +136,10 @@ export default class PhotoWall extends Component {
             }
         }).done(function (data) {
             console.log('Remove message successfully: ', messageId);
-        });
+            if (this.playMessages.length === 0) {
+                this.getHiList();
+            }
+        }.bind(this));
     }
 
     getHiList() {
@@ -241,9 +244,6 @@ export default class PhotoWall extends Component {
         if (!selectedPhoto) {
             return;
         }
-        if (this.playMessages.length === 0) {
-            this.getHiList();
-        }
         this.updateMessageDisplayTime(selectedPhoto.messageID);
         selectedPhoto.isSaying = true;
         // selectedPhoto.isSayTo = Math.random() > 0.5;
@@ -265,7 +265,9 @@ export default class PhotoWall extends Component {
             this.setState({
                 selectedPhoto: selectedPhoto
             });
-            this.getHiList();
+            if(!selectedPhoto.isSaying){
+                this.getHiList();
+            }
             setTimeout(function () {
                 this.state.selectedPhoto.status = PHOTO_STATUS_HIDDEN;
                 this.setState({
