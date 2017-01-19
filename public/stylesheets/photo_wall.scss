@@ -2,8 +2,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1080px;
-  height: 540px;
+  width: 1024px;
+  height: 640px;
   transform: translate(-50%, -50%);
 }
 .photo-wall-container{
@@ -12,13 +12,13 @@
 }
 .photo-wall-container, .photo-show-container{
   position: relative;
-  width: 1080px;
-  height: 540px;
+  width: 1024px;
+  height: 640px;
   //text-align: center;
 }
 .photo-wall-container .preview{
-  width: 108px;
-  height: 77px;
+  width: 102.4px;
+  height: 91.4px;
   padding: 0;
   filter: blur(5px);
   -webkit-filter: blur(5px);
@@ -30,8 +30,8 @@
 
 .photo-container{
   position: absolute;
-  width: 106px;
-  height: 64px;
+  width: 102.4px;
+  height: 91.4px;
 }
 
 .photo-info{
@@ -61,9 +61,9 @@
 .photo-show-container{
   position: absolute;
   width: 800px;
-  height: 440px;
-  left: 90px;
-  top: 50px;
+  height: 362px;
+  left: 62px;
+  top: 90px;
   border-radius: 5px;
   padding: 50px;
   color: #ffffff;

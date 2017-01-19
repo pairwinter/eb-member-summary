@@ -6,7 +6,7 @@ import {render} from 'react-dom';
 import _ from 'lodash';
 
 const animationTypes = "bounceIn fadeIn rotateIn zoomIn".split(" "),
-    outStyles = "bounceOut fadeOut rotateOut zoomOut".split(" "),
+    outStyles = "bounceOutRight bounceOutUp bounceOutDown fadeOutRight fadeOutUp fadeOutDown flipOutX flipOutY slideOutDown slideOutUp slideOutRight rotateOut zoomOutRight zoomOutDown zoomOutUp".split(" "),
     PHOTO_STATUS_HIDDEN = 'hidden',
     PHOTO_STATUS_SELECTED = 'selected',
     PHOTO_STATUS_SHOW = 'show';
@@ -94,6 +94,7 @@ export default class PhotoWall extends Component {
                     ID: member.ID,
                     Name: member.Name,
                     JoinDate: member.JoinDate,
+                    Title: member.Title,
                     src: 'http://www.ihzone.com/everbridge/photowall/public/images/' + (member.Avatar || ("1" + member.Name)) + '.jpg'
                 }
             });
@@ -101,8 +102,8 @@ export default class PhotoWall extends Component {
             imageList.push(JSON.parse(JSON.stringify(imageList[18])));
             _.each(imageList, function (photo, index) {
                 photo.style = Object.assign({}, {
-                    top: Math.floor((index) / 10) * (540/7),
-                    left: (index % 10) * 108
+                    top: Math.floor((index) / 10) * (640/7),
+                    left: (index % 10) * 102.4
                 });
                 console.log(JSON.stringify(photo.style));
             });
@@ -111,7 +112,7 @@ export default class PhotoWall extends Component {
             var imageListCache = {};
             _.each(imageList, function (image) {
                 image.isSaying = false;
-                image.intro = 'Intro';
+                image.intro = image.Title;
                 imageListCache[image.ID] = _.clone(image);
             });
             this.imageListCache = imageListCache;
@@ -279,7 +280,7 @@ export default class PhotoWall extends Component {
                 setTimeout(function () {
                     callback();
                 }.bind(this), 500);
-            }.bind(this), 4000);
+            }.bind(this), 2000);
         }.bind(this), 500);
     }
 
@@ -294,7 +295,7 @@ export default class PhotoWall extends Component {
             } else if (selectedPhoto.status === PHOTO_STATUS_SHOW) {
                 className = className + ' photo-showing fadeInLeft';
             } else {
-                className = 'animated photo-show-container fadeOutRight';
+                className = 'animated photo-show-container ' + outStyles[Math.floor(Math.random()*outStyles.length)];
             }
             if (selectedPhoto.isSayTo) {
                 className = className + ' saying';
